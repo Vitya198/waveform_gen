@@ -1,0 +1,169 @@
+Celkituzes    - 2022 02 18
+===========================================
+
+  - FPGA-n mukodo desgin !!!!!
+    - (clock (PLL) ) + reset gen   - Viktor
+	  - reset sync
+	  - on deamnd  (from PC)
+	- IO                           - Viktor
+	  - Debouncer
+    - NCO            - Viktor
+	  -spec ongoing
+	- Control FSM    - Viktor
+	  -spec ongoing
+	- Comm IF        - Balazs
+	  - IP 
+	- Register file  - Balazs
+	  - control register
+	  - config registerek
+	  - submodule (command interpreter)
+        - define N command 	  
+	- DAC            - Balazs
+	 - Scaling, interfaciong
+	- Dump (?)
+	 - spec ongoing
+	-Top Level        - Viktor
+      integration	
+	  
+  -Testbench          - Balazs
+    - Comm IF model (using Uart IP )
+	- clock modeling 
+	  - FPGA PLL modell library  compilation to TB
+    - system model (NCO, FSM)
+	- Memory  modeling  (block ram ip  (library) )
+	
+	- Verification plan (what will be verified (feature list) ? how ? ) - should be mapped to spec.  - (eg. testing N commands )
+	- creating TC - mapping to verification plan - e.g. --> tc_test_all_commnads.sv  
+
+	
+  - NCO modeling      - Viktor
+    - Python  / SV
+    - memory map generation	
+	
+	
+
+	
+0. from day 0. -- > compilable TB (can be empty), compilable FPGA top level.
+
+
+Next week:
+  Febr. 25, 9:00
+
+  - TB Balazs   -   
+    - compile
+	- uart
+	- send / receive a byte
+	
+  - dig_core Viktor	
+	- interface
+	- Uart inst 
+	- receive data -> invert data - > send data
+	- data to debug   (assign debug_o = rx_data;)
+
+- Code management --> GIT hub
+
+  Interface list:
+   clk,
+   rst_raw_n,
+   tx_o,
+   rx_i,
+   [7:0] debug_o (led)
+   
+
+
+
+
+2022 02 25
+===========================================
+
+  remarks: - lowercase, no special char, asdT(fdf.sv  - bad    > asdft_fdf.sv - good  
+           - gitre : soha nem kerul leforditott file.
+  
+  
+ - project
+  
+   - rtl
+       - design_src1.sv
+	   - design_src2.sv
+	   - design_src3.v
+	 
+   - verif
+       - scricpt
+	     - tools.tcl
+	   
+	   -libs 
+	    - compiled library
+
+       - tests
+         - testcase1_tb.sv
+         - testcase2_tb.sv 	   
+
+       - rundir
+	     - modelsim start
+  
+    - fpga
+	    - fpga realted files
+	
+	- docs
+	
+	- sandbox
+	  - viktor
+	  - balazs
+	  
+
+proc create_libs {} {
+  vlib ../modules_lib
+  vlib ../test_lib
+  #  vmap fpga_mega_lib ../fpga_mega_lib
+  vmap modules_lib ../modules_lib
+  vmap test_lib ../test_lib
+} 
+
+
+proc comp_modules {} {
+    vlog -novopt -incr -work modules_lib ../../rtl/*.sv
+}	
+
+
+proc comp_test {} {
+    vlog -novopt -incr -work test_lib ../tests/*.sv 
+}
+
+
+proc load_sim {} {
+    vsim -novopt +nowarnTSCALE -t 1ps  -Lf test_lib test_lib.test_tb		
+}
+
+
+verilig file:
+filename = module name
+
+dig_core.sv
+
+  module dig_core(....);
+  
+
+test_tb.sv
+  test_tb   
+  
+
+
+
+    vlog -novopt -incr -work modules_lib ../../rtl/src1.sv
+	vlog -novopt -incr -work modules_lib ../../rtl/src2.sv
+
+
+	vlog -novopt -incr -work modules_lib -f ../../rtl/rtl.f 
+    
+	
+	rtl.f
+	
+	../../rtl/src2.sv
+    ../../rtl/src3.sv
+    ../../rtl/src4.sv	
+
+ 
+
+  
+  
+  
