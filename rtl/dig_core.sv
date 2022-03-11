@@ -10,9 +10,9 @@ module dig_core(
 );
 
 //set baudrate
-parameter           fclk      =   50000000;
-parameter           baudrate  =   9600;
-localparam [15:0]   divisor   =   fclk/baudrate/16;
+parameter                 fclk      =   50000000;
+parameter                 baudrate  =   9600;
+localparam logic [15:0]   divisor   =   fclk/baudrate/16;
 
 logic rx_done, tx_done;
 logic [7:0] reg_rx_data, reg_tx_data;
@@ -33,13 +33,13 @@ uart_transceiver i_uart_transcevier(
 );
 
 reg_fsm i_reg_fsm(
-  .clk        (clk          ),
-  .rst_n      (rst_raw_n    ),
-  .rx_done    (rx_done      ),
-  .tx_done    (tx_done      ),
-  .data_i     (reg_rx_data  ),
-  .tx_wr      (send_q       ),
-  .mfsm       (debug_o      )
+  .clk           (clk          ),
+  .rst_n         (rst_raw_n    ),
+  .rx_done_i     (rx_done      ),
+  .tx_done_i     (tx_done      ),
+  .data_i        (reg_rx_data  ),
+  .tx_wr_o       (send_q       ),
+  .main_fsm_en_o (debug_o      )
 );
 
 /*Invert and sends back the incoming data*/

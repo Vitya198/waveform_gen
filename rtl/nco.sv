@@ -1,20 +1,24 @@
 `default_nettype none
 module nco (
-    input  logic clk,
-    input  logic rst_n,
-    input  logic we_i,
+    input  wire        clk,
+    input  wire        rst_n,
+    input  logic       we_i,
     input  logic [7:0] data_i,
     input  logic [7:0] freq_step_i,
+
     output logic [7:0] data_o 
 );
 
+// Parameters defining the 
+localparam logic [7:0]    P_STROBE_MAX  = 8'd520;
+
 /*strobe_generator*/
 logic ce;
-logic [25:0]    str_cnt_d, str_cnt_q;
+logic [25:0] str_cnt_d, str_cnt_q;
 
 always_comb begin
-    str_cnt_d   =   str_cnt_q;
-    cy      =   (str_cnt_q  ==  520);
+    str_cnt_d  =  str_cnt_q;
+    cy         =  (str_cnt_q  ==  P_STROBE_MAX);
 
     if(cy) begin
         str_cnt_d   =   0;
