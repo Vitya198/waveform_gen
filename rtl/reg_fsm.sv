@@ -5,6 +5,9 @@ input logic          rx_done_i,
 input logic          tx_done_i,	
 input logic [7:0]    data_i,
 
+output logic [7:0]    data_o,
+
+
 output logic         tx_wr_o,	
 output logic 	     main_fsm_en_o
 );
