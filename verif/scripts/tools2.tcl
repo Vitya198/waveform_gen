@@ -76,14 +76,3 @@ proc load_sim {} {
     vsim -novopt +nowarnTSCALE -t 1ps  -Lf test_lib -Lf modules_lib test_lib.dig_core_tb	
 }
 
-
-
-
-#1.source ../scripts./tools2.tcl
-#2.create_libs
-#3.comp_modules
-#4.comp_test
-#5.load_sim
-#6.run 2ms
-#(7).restart -f
-#(8).run 100us
