@@ -1,5 +1,8 @@
 `default_nettype none
-module nco (
+module nco #(
+    parameter MAX_ADDR          =  6000;
+    parameter P_STROBE_MAX      =  520;
+) (
     input  wire        clk,
     input  wire        rst_n,
     input  logic       we_i,
@@ -9,18 +12,16 @@ module nco (
     output logic [7:0] data_o 
 );
 
-// Parameters defining the 
-localparam logic [7:0]    P_STROBE_MAX  = 8'd520;
+//-------------------------------------------------------------------------------------------------
 
-/*strobe_generator*/
+/*strobe generator*/
 logic ce;
 logic [25:0] str_cnt_d, str_cnt_q;
 
 always_comb begin
     str_cnt_d  =  str_cnt_q;
-    cy         =  (str_cnt_q  ==  P_STROBE_MAX);
-
-    if(cy) begin
+  
+    if(ce) begin
         str_cnt_d   =   0;
     end
 
@@ -37,17 +38,19 @@ always_ff @(posedge clk or negedge rst_n) begin
         str_cnt_q   <=  str_cnt_d;
     end
 end
-assign ce   =   str_cnt_q;
-/*--------------------------------------------------------*/
 
-/*address_counter*/
+assign ce   =   (str_cnt_q == P_STROBE_MAX);
+
+//-------------------------------------------------------------------------------------------------
+
+/*address counter*/
 logic [12:0] addr_cnt_d, addr_cnt_q;
 logic [12:0] addr;
 
 always_comb begin 
     addr_cnt_d   =   addr_cnt_q;
 
-    if(addr_cnt_q    ==  6000) begin
+    if(addr_cnt_q    >  MAX_ADDR) begin
         addr_cnt_d   =   0;
     end else begin
         if(ce) begin
@@ -70,10 +73,11 @@ always_ff @(posedge clk or negedge rst_n ) begin
 end 
 
 assign addr = addr_cnt_q;
-/*--------------------------------------------------------*/
 
-/*block_ram*/
-reg [12:0] content [0:255];
+//-------------------------------------------------------------------------------------------------
+
+/*block ram*/
+reg [7:0] content [0 : MAX_ADDR-1];
 always_ff @ (posedge clk )
 	begin
 		if ( we_i ) begin
@@ -81,8 +85,8 @@ always_ff @ (posedge clk )
 		end 
 		data_o <= content[addr];
 	end
-/*--------------------------------------------------------*/
+
+//-------------------------------------------------------------------------------------------------
 
 endmodule
-
 `default_nettype wire
