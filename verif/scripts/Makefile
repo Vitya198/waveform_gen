@@ -1,0 +1,38 @@
+all: 
+    clean
+	create_env
+	create_libs
+	comp_all
+	run 
+	run_gui
+
+create_env:
+	mkdir -p ../libs/
+
+create_libs:
+	vlib ../libs/modules_lib
+	vlib ../libs/test_lib
+	vmap modules_lib ../libs/modules_lib
+	vmap test_lib ../libs/test_lib
+	
+clean:
+	rm -rf ../libs
+
+comp_modules:
+	vlog -novopt -incr -work modules_lib ../../rtl/uart_transceiver.v
+	vlog -novopt -incr -work modules_lib ../../rtl/dig_core.sv
+	vlog -novopt -incr -work modules_lib ../../rtl/reg_fsm.sv
+	vlog -novopt -incr -work modules_lib ../../rtl/reg_file.sv
+	
+comp_test:
+	vlog -novopt -incr -work test_lib ../tests/dig_core_tb.sv
+
+comp_all: comp_modules comp_test
+	
+	
+	
+run:
+	vsim -novopt +nowarnTSCALE -t 1ps  -Lf test_lib -Lf modules_lib test_lib.dig_core_tb
+	
+run_gui:
+	vsim -novopt +nowarnTSCALE -t 1ps -gui -Lf test_lib -Lf modules_lib test_lib.dig_core_tb	

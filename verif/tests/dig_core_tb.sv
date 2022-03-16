@@ -6,27 +6,27 @@ logic           clk_i;
 logic           rst_n_i;
 logic           tx_wr_i;
 logic [7:0]     tx_data_i;
-logic rx;
+logic           rx;
                   
 //Outputs
 logic           tx_done_o;
 logic           rx_done_o;
 logic [7:0]     rx_data_o;
-logic tx;
+logic           tx;
 logic [7:0]     debug_o;
 
 
 uart_transceiver uart_model(
-    .sys_clk (clk_i     ),
-    .sys_rst (!rst_n_i  ),
-    .divisor (16'd326   ),
-    .uart_rx (tx        ),
-    .uart_tx (rx        ),
-    .tx_data (tx_data_i ),
-    .rx_data (rx_data_o ),
-    .tx_wr   (tx_wr_i   ),
-    .tx_done (tx_done_o ),
-    .rx_done (rx_done_o )
+  .sys_clk (clk_i     ),
+  .sys_rst (!rst_n_i  ),
+  .divisor (16'd326   ),
+  .uart_rx (tx        ),
+  .uart_tx (rx        ),
+  .tx_data (tx_data_i ),
+  .rx_data (rx_data_o ),
+  .tx_wr   (tx_wr_i   ),
+  .tx_done (tx_done_o ),
+  .rx_done (rx_done_o )
 );
 
 dig_core dut(
@@ -39,32 +39,25 @@ dig_core dut(
 
 task send_bytes(input logic [0:7] data [2:0], int num_of_data );
 
-    for(int x=0; x <= num_of_data; x++)begin
-        tx_data_i = data[x];
-        //test data valid pulse 
-        @(posedge clk_i);
-        #1ns;	 //  Data clock to Q
-        tx_wr_i =   1; 
-        @(posedge clk_i);
-        #1ns;	 //  Data clock to Q
-        tx_wr_i =   0;  
-        @(posedge tx_done_o);
-        #1ns;
-    end
+  for(int x=0; x <= num_of_data; x++)begin
+    tx_data_i = data[x];
+    //test data valid pulse 
+    @(posedge clk_i);
+    #1ns;	 //  Data clock to Q
+    tx_wr_i =   1; 
+    @(posedge clk_i);
+    #1ns;	 //  Data clock to Q
+    tx_wr_i =   0;  
+    @(posedge tx_done_o);
+    #1ns;
+  end
+  
 endtask;
 
 task receive();
-    
-    @(posedge rx_done_o);
-    #1ns;       //  Data clock to Q
-
-    if (rx_data_o == ~tx_data_i) begin
-        $display("Test Passed");
-    end
-
-    else begin
-        $display("Test Failed");
-    end
+  @(posedge rx_done_o);
+  #1ns;       //  Data clock to Q
+  $display("%d",debug_o);
 endtask
 
 initial begin
@@ -79,10 +72,10 @@ rst_n_i     =   1;
 
 //  test comes here
 
-    #1ns;  
-    send_bytes({8'ha1, 8'h00, 8'h01}, 3);
-    #1ns;
-    //receive();
+  #1ns;  
+  send_bytes({8'ha1, 8'h00, 8'h01}, 3);
+  #1ns;
+  receive();
 
 
 // end of test
