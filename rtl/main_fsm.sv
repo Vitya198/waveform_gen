@@ -18,15 +18,19 @@ module main_fsm(
     */
 
     //nco control fsm output
-    output logic       nco_we_o,
-    output logic [7:0] nco_data_o,
+    output logic        nco_we_o,
+    output logic [7:0]  nco_data_o,
     output logic [13:0] nco_freq_step_o
 
 );
 
 //-------------------------------------------------------------------------------------------------
 
-typedef enum logic [2:0] {S_IDLE, S_RUN, S_LOAD, S_DUMP } state_t;
+
+
+//-------------------------------------------------------------------------------------------------
+
+typedef enum logic [2:0] {S_IDLE, S_WAIT S_RUN, S_LOAD, S_DUMP } state_t;
 state_t state, next_state;
 
 //-------------------------------------------------------------------------------------------------
@@ -57,6 +61,10 @@ always_comb begin
           -------
       end
 
+      S_WAIT: begin
+          -----
+      end
+
       S_RUN: begin
           -----
       end
@@ -77,7 +85,10 @@ end
 assign nco_we_o;
 assign nco_data_o;
 assign nco_freq_step_o;
-assign...
+.
+.
+.
+
 
 endmodule
 `default_nettype wire 

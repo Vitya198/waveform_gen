@@ -1,22 +1,22 @@
 `default_nettype none
 module reg_fsm(
-input wire           clk,
-input wire           rst_n,
-input logic          rx_done_i,
-input logic          tx_done_i,	
-input logic  [7:0]   data_i,
+input  wire          clk,
+input  wire          rst_n,
+input  wire          rx_done_i,
+input  wire          tx_done_i,	
+input  wire   [7:0]  data_i,
 
-output logic [7:0]   data_o,
-output logic         tx_wr_o,	
-output logic [7:0]   debug_o,
-output logic [7:0]   reg_data_o,
-output logic         reg_data_valid_o
+output logic  [7:0]  reg_addr_o,
+output logic         rd_en_o,
+output logic         wr_en_o
 );
 
 //-------------------------------------------------------------------------------------------------
 
-typedef enum  logic [1:0] {CMD_NOP, CMD_WR, CMD_RD  } cmd_type;
-cmd_type cmd_type_d, cmd_type_q;
+localparam logic [7:0] CMD_NOP = 8'h00;
+localparam logic [7:0] CMD_WR  = 8'h01;
+localparam logic [7:0] CMD_RD  = 8'h02; 
+logic [7:0] cmd_type_d, cmd_type_q;
 
 //-------------------------------------------------------------------------------------------------
 
@@ -70,8 +70,9 @@ always_comb begin
 
         S_DATA:	begin
         			if ( rx_done_i ) begin
-                        next_state = S_TYPE;
-						cmd_type_d  = P_CMD_NOP;
+                        next_state  = S_TYPE;
+						cmd_type_d  = CMD_NOP;
+						data_d  = data_i;
                     end
         		end
     endcase
@@ -79,8 +80,8 @@ end
 
 //-------------------------------------------------------------------------------------------------
 
-assign wr_en = (cmd_type_q == CMP_WR) &&  (state == S_DATA) && rx_done_i;
-assign rd_en = (cmd_type_q == CMP_RD) &&  (state == S_DATA) && rx_done_i;
+assign wr_en_o    = ((cmd_type_q == CMD_WR) &&  (state == S_DATA) && rx_done_i);
+assign rd_en_o    = ((cmd_type_q == CMD_RD) &&  (state == S_DATA) && rx_done_i);
 
 endmodule
 `default_nettype wire   

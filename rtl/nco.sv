@@ -1,7 +1,7 @@
 `default_nettype none
 module nco #(
-    parameter MAX_ADDR          =  6000;
-    parameter P_STROBE_MAX      =  520;
+    parameter MAX_ADDR          =  6000,
+    parameter P_STROBE_MAX      =  520
 ) (
     input  wire        clk,
     input  wire        rst_n,
