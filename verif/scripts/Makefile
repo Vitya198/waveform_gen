@@ -1,10 +1,5 @@
-all: 
-    clean
-	create_env
-	create_libs
-	comp_all
-	run 
-	run_gui
+
+all:  create_env create_libs comp_all run_gui 
 
 create_env:
 	mkdir -p ../libs/
