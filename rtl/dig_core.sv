@@ -60,7 +60,7 @@ reg_file i_reg_file(
   .clk        (clk        ),
   .rst_n      (rst_raw_n  ),
   .addr_i     (reg_addr_o ),
-  .data_i     (reg_data_o ),
+  .data_i     (rx_data    ),
   .wr_en_i    (wr_en      ),
   .data_o     (data_o     )  
 );

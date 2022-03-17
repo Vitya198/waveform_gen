@@ -1,5 +1,5 @@
 
-all:  create_env create_libs comp_all run_gui 
+all:  clean create_env create_libs comp_all run_gui 
 
 create_env:
 	mkdir -p ../libs/
@@ -30,4 +30,29 @@ run:
 	vsim -novopt +nowarnTSCALE -t 1ps  -Lf test_lib -Lf modules_lib test_lib.dig_core_tb
 	
 run_gui:
-	vsim -novopt +nowarnTSCALE -t 1ps -gui -Lf test_lib -Lf modules_lib test_lib.dig_core_tb	
+	vsim -novopt +nowarnTSCALE -t 1ps -do test.do -gui -Lf test_lib -Lf modules_lib test_lib.dig_core_tb
+
+run_sanity:
+	run clean
+
+#github
+dload:
+	git init ../..
+	git pull  https://github.com/Vitya198/waveform_gen
+
+uload:
+	git init ../..
+	git add . ../..
+	git commit -m "upload"
+	git remote -v
+	git push -u origin master
+
+remote:
+	git init ../..
+	git add . ../..
+	git commit -m "upload"
+	git remote add origin https://github.com/Vitya198/waveform_gen
+	git remote -v
+	git push -u origin master
+
+
