@@ -37,9 +37,9 @@ dig_core dut(
   .debug_o  (debug_o    )
 );
 
-task send_bytes(input logic [0:7] data [2:0], int num_of_data );
+task send_bytes(input logic [7:0] data [0:2], int num_of_data );
 
-  for(int x=0; x <= num_of_data; x++)begin
+  for(int x = 0; x < num_of_data; x++)begin
     tx_data_i = data[x];
     //test data valid pulse 
     @(posedge clk_i);
@@ -73,7 +73,9 @@ rst_n_i     =   1;
 //  test comes here
 
   #1ns;  
-  send_bytes({8'ha1, 8'h00, 8'h01}, 3);
+  send_bytes({ 8'h01, 8'h00, 8'ha1}, 3);
+  #1ns; 
+  send_bytes({8'h02, 8'h00, 8'h00}, 3);
   #1ns;
   receive();
 

@@ -1,5 +1,5 @@
 `default_nettype none
-//HP-féle debouncer ip core
+//HP-féle debouncer 
 module io_debouncer (
 	input logic clk,
 	input logic as_reset_n,

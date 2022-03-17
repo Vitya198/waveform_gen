@@ -1,11 +1,11 @@
 `default_nettype none
 module dig_core(
-    input  wire clk,
-    input  wire rst_raw_n,
-    input  wire rx_i,
-
-    output logic        tx_o,
-    output logic [7:0]  debug_o  //led
+input  wire         clk,
+input  wire         rst_raw_n,
+input  wire         rx_i,
+  
+output logic        tx_o,
+output logic [7:0]  debug_o  //led
 );
 
 //-------------------------------------------------------------------------------------------------

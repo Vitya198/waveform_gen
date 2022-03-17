@@ -23,8 +23,8 @@ comp_test:
 	vlog -novopt -incr -work test_lib ../tests/dig_core_tb.sv
 
 comp_all: comp_modules comp_test
-	
-	
+
+
 	
 run:
 	vsim -novopt +nowarnTSCALE -t 1ps  -Lf test_lib -Lf modules_lib test_lib.dig_core_tb
@@ -35,7 +35,7 @@ run_gui:
 run_sanity:
 	run clean
 
-#github
+#github 
 dload:
 	git init ../..
 	git pull  https://github.com/Vitya198/waveform_gen
@@ -43,14 +43,14 @@ dload:
 upload:
 	git init ../..
 	git add . ../..
-	git commit -m "upload"
+	git commit -m "update"
 	git remote -v
 	git push -u origin master
 
 remote:
 	git init ../..
 	git add . ../..
-	git commit -m "upload"
+	git commit -m "update"
 	git remote add origin https://github.com/Vitya198/waveform_gen
 	git remote -v
 	git push -u origin master

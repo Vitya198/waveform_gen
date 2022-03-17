@@ -1,30 +1,30 @@
 `default_nettype none
 module reg_file (
-    
-    input  wire          clk,
-    input  wire          rst_n,
+  
+  input  wire          clk,
+  input  wire          rst_n,
 
-    input  wire  [7:0]   addr_i,
-    input  wire  [7:0]   data_i,
-    input  wire          wr_en_i,
+  input  wire  [7:0]   addr_i,
+  input  wire  [7:0]   data_i,
+  input  wire          wr_en_i,
 
-    //mfsm control register 
-   /* output logic mfsm_en_o,
-    //output logic mfsm_reg1_o,
-    //output logic mfsm_reg2_o,
+  //mfsm control register 
+  /* output logic mfsm_en_o,
+  //output logic mfsm_reg1_o,
+  //output logic mfsm_reg2_o,
 
-    //nco_control
-    output logic        nco_en_o,
-    output logic [13:0] nco_freq_set_o,
+  //nco_control
+  output logic        nco_en_o,
+  output logic [13:0] nco_freq_set_o,
 
-    //dac control register
-    output logic dac_en_o,
-    output logic dac_scale_o,
+  //dac control register
+  output logic dac_en_o,
+  output logic dac_scale_o,
 
-    //dump control register
-    output logic dump_en_o,
+  //dump control register
+  output logic dump_en_o,
 */
-    output logic [7:0] data_o
+  output logic [7:0] data_o
 
 );
 
@@ -38,31 +38,31 @@ logic [7:0] reg_addr_d, reg_addr_q;
 //-------------------------------------------------------------------------------------------------
 
 always_comb begin
-	reg_array_d  =  reg_array_q;
-	reg_addr_d   =  reg_addr_q;
-	reg_addr_d   =  reg_addr_q;
-	if(wr_en_i) begin
-		reg_array_d [reg_addr_q] = data_i;
-	end
+  reg_array_d  =  reg_array_q;
+  reg_addr_d   =  reg_addr_q;
+  reg_addr_d   =  reg_addr_q;
+  if(wr_en_i) begin
+    reg_array_d [reg_addr_q] = data_i;
+  end
 end
 
 //-------------------------------------------------------------------------------------------------
 
 always_ff @(posedge clk, negedge rst_n) begin 
-	if(!rst_n) begin
-		reg_array_q[0] <= 8'd0;
-        reg_array_q[1] <= 8'd0;
-        reg_array_q[2] <= 8'd0;
-        reg_array_q[3] <= 8'd0;
-        reg_array_q[4] <= 8'd0;
-        reg_array_q[5] <= 8'd0;
-        reg_array_q[6] <= 8'd0;
-        reg_array_q[7] <= 8'd0;
-        reg_addr_q     <= 8'd0;
+  if(!rst_n) begin
+    reg_array_q[0] <= 8'd0;
+      reg_array_q[1] <= 8'd0;
+      reg_array_q[2] <= 8'd0;
+      reg_array_q[3] <= 8'd0;
+      reg_array_q[4] <= 8'd0;
+      reg_array_q[5] <= 8'd0;
+      reg_array_q[6] <= 8'd0;
+      reg_array_q[7] <= 8'd0;
+      reg_addr_q     <= 8'd0;
     end 
     else begin
-       reg_array_q     <= reg_array_d;
-       reg_addr_q      <= reg_addr_d;
+      reg_array_q     <= reg_array_d;
+      reg_addr_q      <= reg_addr_d;
     end
 end
     

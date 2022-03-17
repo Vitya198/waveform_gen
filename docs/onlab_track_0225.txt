@@ -2,18 +2,18 @@ Celkituzes    - 2022 02 18
 ===========================================
 
   - FPGA-n mukodo desgin !!!!!
-    - (clock (PLL) ) + reset gen   - Viktor
+    - (clock (PLL) ) + reset gen   
 	  - reset sync
 	  - on deamnd  (from PC)
-	- IO                           - Viktor
+	- IO                           
 	  - Debouncer
-    - NCO            - Viktor
+    - NCO            
 	  -spec ongoing
-	- Control FSM    - Viktor
+	- Control FSM    
 	  -spec ongoing
-	- Comm IF        - Balazs
+	- Comm IF        
 	  - IP 
-	- Register file  - Balazs
+	- Register file  
 	  - control register
 	  - config registerek
 	  - submodule (command interpreter)
@@ -22,10 +22,10 @@ Celkituzes    - 2022 02 18
 	 - Scaling, interfaciong
 	- Dump (?)
 	 - spec ongoing
-	-Top Level        - Viktor
+	-Top Level      
       integration	
 	  
-  -Testbench          - Balazs
+  -Testbench        
     - Comm IF model (using Uart IP )
 	- clock modeling 
 	  - FPGA PLL modell library  compilation to TB
@@ -36,7 +36,7 @@ Celkituzes    - 2022 02 18
 	- creating TC - mapping to verification plan - e.g. --> tc_test_all_commnads.sv  
 
 	
-  - NCO modeling      - Viktor
+  - NCO modeling     
     - Python  / SV
     - memory map generation	
 	
@@ -49,12 +49,12 @@ Celkituzes    - 2022 02 18
 Next week:
   Febr. 25, 9:00
 
-  - TB Balazs   -   
+  - TB 
     - compile
 	- uart
 	- send / receive a byte
 	
-  - dig_core Viktor	
+  - dig_core 
 	- interface
 	- Uart inst 
 	- receive data -> invert data - > send data
@@ -107,45 +107,7 @@ Next week:
 	- docs
 	
 	- sandbox
-	  - viktor
-	  - balazs
 	  
-
-proc create_libs {} {
-  vlib ../modules_lib
-  vlib ../test_lib
-  #  vmap fpga_mega_lib ../fpga_mega_lib
-  vmap modules_lib ../modules_lib
-  vmap test_lib ../test_lib
-} 
-
-
-proc comp_modules {} {
-    vlog -novopt -incr -work modules_lib ../../rtl/*.sv
-}	
-
-
-proc comp_test {} {
-    vlog -novopt -incr -work test_lib ../tests/*.sv 
-}
-
-
-proc load_sim {} {
-    vsim -novopt +nowarnTSCALE -t 1ps  -Lf test_lib test_lib.test_tb		
-}
-
-
-verilig file:
-filename = module name
-
-dig_core.sv
-
-  module dig_core(....);
-  
-
-test_tb.sv
-  test_tb   
-  
 
 
 
