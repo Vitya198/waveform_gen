@@ -49,7 +49,7 @@ reg_fsm i_reg_fsm(
   .tx_done_i   (tx_done     ),
   .data_i      (rx_data     ),
   .reg_data_o  (reg_data_o  ),
-  .reg_addr_o  (reg_addr_o  ), ***
+  .reg_addr_o  (reg_addr_o  ), 
   .rd_en_o     (rd_en       ),
   .wr_en_o     (wr_en       )
 );

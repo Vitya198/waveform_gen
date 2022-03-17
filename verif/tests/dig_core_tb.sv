@@ -77,7 +77,6 @@ rst_n_i     =   1;
   #1ns;
   receive();
 
-
 // end of test
 
 #1ms;
