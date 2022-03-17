@@ -36,11 +36,11 @@ run_sanity:
 	run clean
 
 #github
-load:
+dload:
 	git init ../..
 	git pull  https://github.com/Vitya198/waveform_gen
 
-store:
+upload:
 	git init ../..
 	git add . ../..
 	git commit -m "upload"
