@@ -1,14 +1,15 @@
 `default_nettype none
 module reg_fsm(
-input  wire          clk,
-input  wire          rst_n,
-input  wire          rx_done_i,
-input  wire          tx_done_i,	
-input  wire   [7:0]  data_i,
-
-output logic  [7:0]  reg_addr_o,
-output logic         rd_en_o,
-output logic         wr_en_o
+input  wire         clk,
+input  wire         rst_n,
+input  wire         rx_done_i,
+input  wire         tx_done_i,	
+input  wire  [7:0]  data_i,
+ 
+output logic [7:0]  reg_addr_o,
+output logic [7:0]  reg_data_o,
+output logic        rd_en_o,
+output logic        wr_en_o
 );
 
 //-------------------------------------------------------------------------------------------------
@@ -82,6 +83,7 @@ end
 
 assign wr_en_o    = ((cmd_type_q == CMD_WR) &&  (state == S_DATA) && rx_done_i);
 assign rd_en_o    = ((cmd_type_q == CMD_RD) &&  (state == S_DATA) && rx_done_i);
+assign reg_data_o = data_q;
 
 endmodule
 `default_nettype wire   

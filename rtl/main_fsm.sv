@@ -27,7 +27,6 @@ module main_fsm(
 //-------------------------------------------------------------------------------------------------
 
 
-
 //-------------------------------------------------------------------------------------------------
 
 typedef enum logic [2:0] {S_IDLE, S_WAIT S_RUN, S_LOAD, S_DUMP } state_t;
@@ -85,9 +84,7 @@ end
 assign nco_we_o;
 assign nco_data_o;
 assign nco_freq_step_o;
-.
-.
-.
+
 
 
 endmodule

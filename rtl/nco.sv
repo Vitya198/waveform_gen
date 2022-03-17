@@ -1,7 +1,7 @@
 `default_nettype none
 module nco #(
-    parameter MAX_ADDR          =  6000,
-    parameter P_STROBE_MAX      =  520
+    parameter MAX_ADDR        =  6000,
+    parameter STROBE_MAX      =  520
 ) (
     input  wire        clk,
     input  wire        rst_n,
@@ -32,14 +32,14 @@ end
 
 always_ff @(posedge clk or negedge rst_n) begin 
     if(!rst_n) begin
-        str_cnt_q   <=  'b0;
+        str_cnt_q   <=  26'd0;
     end
     else begin
         str_cnt_q   <=  str_cnt_d;
     end
 end
 
-assign ce   =   (str_cnt_q == P_STROBE_MAX);
+assign ce   =   (str_cnt_q == STROBE_MAX);
 
 //-------------------------------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ always_comb begin
     addr_cnt_d   =   addr_cnt_q;
 
     if(addr_cnt_q    >  MAX_ADDR) begin
-        addr_cnt_d   =   0;
+        addr_cnt_d   =   13'd0;
     end else begin
         if(ce) begin
             if(we_i) begin
@@ -65,10 +65,10 @@ end
 
 always_ff @(posedge clk or negedge rst_n ) begin 
     if(!rst_n) begin
-        addr_cnt_q   <=  0;
+        addr_cnt_q   <=  13'd0;
     end
     else begin
-        addr_cnt_q   <=   addr_cnt_d;
+        addr_cnt_q   <=   add  r_cnt_d;
     end
 end 
 

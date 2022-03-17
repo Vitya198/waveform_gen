@@ -5,7 +5,7 @@ module reg_file (
     input  wire          rst_n,
 
     input  wire  [7:0]   addr_i,
-    input  wire  [7:0]   data_i,
+    input  wire  [7:0]   fsm_data_i,
     input  wire          wr_en_i,
 
     //mfsm control register 
@@ -24,7 +24,7 @@ module reg_file (
     //dump control register
     output logic dump_en_o,
 */
-    output logic [7:0] reg_data_o
+    output logic [7:0] data_o
 
 );
 
@@ -42,7 +42,7 @@ always_comb begin
 	reg_addr_d   =  reg_addr_q;
 	reg_addr_d   =  reg_addr_q;
 	if(wr_en_i) begin
-		reg_array_d [reg_addr_q] = data_i;
+		reg_array_d [reg_addr_q] = fsm_data_i;
 	end
 end
 
@@ -93,7 +93,7 @@ assign dump_en_o         = reg_array_q[4][0];
 */
 
 /*read register file*/
-assign reg_data_o        = reg_array_d [reg_addr_q];
+assign data_o        = reg_array_d [reg_addr_q];
     
 endmodule
 `default_nettype wire    
