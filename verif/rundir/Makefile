@@ -48,7 +48,11 @@ store:
 	git push -u origin master
 
 remote:
+	git init ../..
+	git add . ../..
+	git commit -m "upload"
 	git remote add origin https://github.com/Vitya198/waveform_gen
-
+	git remote -v
+	git push -u origin master
 
 
