@@ -18,6 +18,8 @@ comp_modules:
 	vlog -novopt -incr -work modules_lib ../../rtl/dig_core.sv
 	vlog -novopt -incr -work modules_lib ../../rtl/reg_fsm.sv
 	vlog -novopt -incr -work modules_lib ../../rtl/reg_file.sv
+	vlog -novopt -incr -work modules_lib ../../rtl/main_fsm.sv
+	vlog -novopt -incr -work modules_lib ../../rtl/nco.sv
 	
 comp_test:
 	vlog -novopt -incr -work test_lib ../tests/dig_core_tb.sv
@@ -34,7 +36,7 @@ run_gui:
 
 run_sanity:
 	run clean
-
+	
 #github 
 dload:
 	git init ../..

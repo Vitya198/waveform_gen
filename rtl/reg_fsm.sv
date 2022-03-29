@@ -31,7 +31,7 @@ state_t state, next_state;
 
 //-------------------------------------------------------------------------------------------------
 
-always_ff @ ( posedge clk, posedge rst_n ) begin
+always_ff @ ( posedge clk, negedge rst_n ) begin
   if(!rst_n) begin
     state      <= S_TYPE;
     cmd_type_q <= CMD_NOP;
@@ -50,30 +50,30 @@ end
 
 always_comb begin
   next_state   =  state;
-	cmd_type_d   =  cmd_type_q;
+  cmd_type_d   =  cmd_type_q;
   addr_d       =  addr_q;  
   data_d       =  data_q;
 
   case (state)
     S_TYPE: begin
-	    if(rx_done_i) begin
-	      next_state = S_ADD;
-	      cmd_type_d = data_i;  
-	    end
-	  end  
+      if(rx_done_i) begin
+        next_state = S_ADD;
+        cmd_type_d = data_i;  
+      end
+    end  
 
     S_ADD: begin
-    	if ( rx_done_i ) begin
+      if ( rx_done_i ) begin
         next_state = S_DATA;
-        addr_d     = data_i; 
+        addr_d     = data_i;
       end
     end
 
     S_DATA:	begin
-    	if ( rx_done_i ) begin
+      if ( rx_done_i ) begin
         next_state  = S_TYPE;
-	  	  cmd_type_d  = CMD_NOP;
-	  	  data_d  = data_i;
+        cmd_type_d  = CMD_NOP;
+        data_d  = data_i;
       end
     end
   endcase

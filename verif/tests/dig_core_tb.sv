@@ -13,8 +13,8 @@ logic           tx_done_o;
 logic           rx_done_o;
 logic [7:0]     rx_data_o;
 logic           tx;
+logic [7:0]     dig_out;
 logic [7:0]     debug_o;
-
 
 uart_transceiver uart_model(
   .sys_clk (clk_i     ),
@@ -34,6 +34,7 @@ dig_core dut(
   .rst_raw_n(rst_n_i    ),
   .rx_i     (rx         ),
   .tx_o     (tx         ),
+  .dig_out  (dig_out    ),
   .debug_o  (debug_o    )
 );
 
